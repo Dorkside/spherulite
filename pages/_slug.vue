@@ -1,12 +1,12 @@
 <template>
-  <MainContainer>
-    <h1>{{ page.title }}</h1>
-    <nuxt-content
-      class="prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto"
-      :document="page"
-      tag="article"
-    />
-  </MainContainer>
+  <article
+    class="prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto dark:prose-invert"
+  >
+    <h1>
+      {{ page.title }}
+    </h1>
+    <nuxt-content :document="page" />
+  </article>
 </template>
 
 <script>
