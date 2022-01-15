@@ -1,6 +1,6 @@
 <template>
   <main>
-    <!-- <slot></slot> -->
+    <slot></slot>
     <aside>
       <client-only>
         <lazy-force-graph-3d :graph-data="graph" />
@@ -24,11 +24,33 @@ export default {
             name: 'name2',
             val: 10,
           },
+          {
+            id: 'id3',
+            name: 'name2',
+            val: 10,
+          },
+          {
+            id: 'id4',
+            name: 'name2',
+            val: 10,
+          },
         ],
         links: [
           {
             source: 'id1',
             target: 'id2',
+          },
+          {
+            source: 'id1',
+            target: 'id3',
+          },
+          {
+            source: 'id2',
+            target: 'id3',
+          },
+          {
+            source: 'id3',
+            target: 'id4',
           },
         ],
       }

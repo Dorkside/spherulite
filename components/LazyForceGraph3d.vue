@@ -44,7 +44,9 @@ export default {
       }
     },
     async configureGraph() {
-      this.graph.onEngineStop(() => this.graph.zoomToFit(400))
+      this.graph.cooldownTicks(100)
+      // this.graph.onEngineStop(() => this.graph.zoomToFit(400))
+      this.graph.d3Force('charge').strength(-120)
       const SpriteText = await (() =>
         import('~/plugins/SpriteText.client.js'))()
       this.graph.nodeThreeObject((node) => {
@@ -53,6 +55,21 @@ export default {
         sprite.color = 'white'
         sprite.textHeight = 2
         return sprite
+      })
+      this.graph.onNodeClick((node) => {
+        // Aim at node from outside it
+        const distance = 40
+        const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z)
+
+        this.graph.cameraPosition(
+          {
+            x: node.x * distRatio,
+            y: node.y * distRatio,
+            z: node.z * distRatio,
+          }, // new position
+          node, // lookAt ({ x, y, z })
+          3000 // ms transition duration
+        )
       })
     },
     onResize() {

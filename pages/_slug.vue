@@ -12,8 +12,8 @@
 <script>
 export default {
   name: 'IndexPage',
-  async asyncData({ $content }) {
-    const page = await $content('Accueil').fetch()
+  async asyncData({ $content, params }) {
+    const page = await $content(params.slug).fetch()
 
     return {
       page,
