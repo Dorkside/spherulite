@@ -70,12 +70,17 @@ export default {
           node, // lookAt ({ x, y, z })
           3000 // ms transition duration
         )
+
+        this.$router.push({
+          path: `/${node.id}`,
+        })
       })
     },
     onResize() {
       window.requestAnimationFrame(() => {
         const { width, height } = this.$refs.container.getBoundingClientRect()
-        this.graph.width(width).height(height)
+        this.graph.width(width)
+        this.graph.height(height)
       })
     },
   },
