@@ -53,28 +53,35 @@ export default {
         const sprite = new SpriteText.default.default(node.id)
         sprite.material.depthWrite = false // make sprite background transparent
         sprite.color = 'white'
-        sprite.textHeight = 2
+        sprite.textHeight = 4
         return sprite
       })
       this.graph.onNodeClick((node) => {
-        // Aim at node from outside it
-        const distance = 40
-        const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z)
-
-        this.graph.cameraPosition(
-          {
-            x: node.x * distRatio,
-            y: node.y * distRatio,
-            z: node.z * distRatio,
-          }, // new position
-          node, // lookAt ({ x, y, z })
-          3000 // ms transition duration
-        )
+        this.centerOnNode(node)
 
         this.$router.push({
           path: `/${node.id}`,
         })
       })
+      this.$nuxt.$on('navigate', (event) => {
+        const node = this.graph.graphData().nodes.find((n) => n.id === event)
+        this.centerOnNode(node)
+      })
+    },
+    centerOnNode(node) {
+      // Aim at node from outside it
+      const distance = 40
+      const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z)
+
+      this.graph.cameraPosition(
+        {
+          x: node.x * distRatio,
+          y: node.y * distRatio,
+          z: node.z * distRatio,
+        }, // new position
+        node, // lookAt ({ x, y, z })
+        3000 // ms transition duration
+      )
     },
     onResize() {
       window.requestAnimationFrame(() => {

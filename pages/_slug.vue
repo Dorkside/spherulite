@@ -19,5 +19,8 @@ export default {
       page,
     }
   },
+  mounted() {
+    this.$nuxt.$emit('navigate', this.page.slug)
+  },
 }
 </script>
