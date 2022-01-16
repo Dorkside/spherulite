@@ -1,0 +1,7 @@
+Obsidian {
+    text = (link | tag | any)*
+    link = "!"?"[[" linkText "]]"
+    linkText = (~"]]" any)*
+    tag = "#" tagText (space | end)
+    tagText = (~space alnum)*
+}

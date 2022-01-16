@@ -40,13 +40,13 @@ export default {
     },
     loadData() {
       if (this.graph && this.graphData) {
-        this.graph.graphData(this.graphData)
+        this.graph.graphData(JSON.parse(JSON.stringify(this.graphData)))
       }
     },
     async configureGraph() {
       this.graph.cooldownTicks(100)
       // this.graph.onEngineStop(() => this.graph.zoomToFit(400))
-      this.graph.d3Force('charge').strength(-120)
+      // this.graph.d3Force('charge').strength(-120)
       const SpriteText = await (() =>
         import('~/plugins/SpriteText.client.js'))()
       this.graph.nodeThreeObject((node) => {

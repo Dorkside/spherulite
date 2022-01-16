@@ -1,3 +1,47 @@
+/* eslint-disable no-unused-vars */
+const ohm = require('ohm-js')
+const fs = require('fs')
+
+const g = ohm.grammar(fs.readFileSync('ohm/obsidian.ohm'))
+
+const semantics = g.createSemantics().addOperation('extractTags', {
+  _iter(...children) {
+    return children.map((child) => child.extractTags())
+  },
+  _terminal() {
+    return undefined
+  },
+  text(e) {
+    return e.extractTags()
+  },
+  link(_1, _2, text, _3) {
+    return text.extractTags()
+  },
+  linkText(_1) {
+    return this.sourceString
+  },
+  tag(_1, text, _2) {
+    return text.extractTags()
+  },
+  tagText(_1) {
+    return this.sourceString
+  },
+})
+
+const getTextChildren = (item) => {
+  return (
+    item.children &&
+    item.children
+      .map((child) => {
+        if (child.type === 'text') {
+          return child.value
+        }
+        return getTextChildren(child)
+      })
+      .flat()
+  )
+}
+
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -54,5 +98,22 @@ export default {
 
   colorMode: {
     classSuffix: '',
+  },
+
+  hooks: {
+    'content:file:beforeInsert': async (document) => {
+      if (document.extension === '.md') {
+        document.tags = getTextChildren(document.body)
+          .filter((text) => text !== '\n')
+          .map((text) => {
+            const match = g.match(text)
+            return semantics(match)
+              .extractTags()
+              .filter((tag) => !!tag)
+          })
+          .filter((tag) => !!tag)
+          .flat(Infinity)
+      }
+    },
   },
 }
