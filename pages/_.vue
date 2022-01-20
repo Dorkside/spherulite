@@ -12,8 +12,9 @@
 <script>
 export default {
   name: 'IndexPage',
-  async asyncData({ $content, params }) {
-    const page = await $content(params.slug).fetch()
+  async asyncData({ $content, route }) {
+    console.log(decodeURI(route.path.substring(1)))
+    const page = await $content(decodeURI(route.path.substring(1))).fetch()
 
     return {
       page,

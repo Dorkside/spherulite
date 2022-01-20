@@ -10,12 +10,15 @@ export const mutations = {
 
 export const actions = {
   async nuxtServerInit({ commit }) {
-    const content = await this.$content().fetch()
+    const content = await this.$content('/', { deep: true }).fetch()
     const graph = content.reduce(
       (graph, document) => {
         graph.nodes.push({ id: document.slug, name: document.slug })
         graph.nodes.push(
-          ...document.tags.map((tag) => ({ id: tag, name: tag }))
+          ...document.tags.map((tag) => ({
+            id: tag,
+            name: tag,
+          }))
         )
         graph.links.push(
           ...document.tags.map((tag) => ({

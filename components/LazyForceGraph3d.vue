@@ -67,6 +67,9 @@ export default {
         const node = this.graph.graphData().nodes.find((n) => n.id === event)
         this.centerOnNode(node)
       })
+      this.graph.linkColor('#ffffff')
+      this.graph.linkWidth(0.2)
+      this.graph.linkOpacity(1)
     },
     centerOnNode(node) {
       // Aim at node from outside it
