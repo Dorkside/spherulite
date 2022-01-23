@@ -46,7 +46,7 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
   router: {
-    base: '/spherulite-test/',
+    base: process.env.GITHUB_REPOSITORY?.split('/')[1] || '/',
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
