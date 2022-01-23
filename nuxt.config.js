@@ -47,7 +47,9 @@ export default {
   target: 'static',
 
   router: {
-    base: `/${process.env.GITHUB_REPOSITORY?.split('/')[1]}/` || '/',
+    base: process.env.GITHUB_REPOSITORY
+      ? `/${process.env.GITHUB_REPOSITORY.split('/')[1]}/`
+      : '/',
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
