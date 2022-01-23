@@ -10,7 +10,7 @@
 export default {
   name: 'IndexPage',
   async asyncData({ $content }) {
-    const page = await $content('Digital garden/Accueil').fetch()
+    const page = await $content(process.env.LANDING_PAGE || 'index').fetch()
 
     return {
       page,
