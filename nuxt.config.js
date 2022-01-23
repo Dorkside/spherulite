@@ -45,8 +45,9 @@ const getTextChildren = (item) => {
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
-
-  base: '/Dorkside/spherulite-test/',
+  router: {
+    base: '/spherulite-test/',
+  },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
