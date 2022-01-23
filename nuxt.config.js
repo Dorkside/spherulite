@@ -98,9 +98,17 @@ export default {
 
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {
-    remarkPlugins: [
-      ['remark-wiki-link', { hrefTemplate: (permalink) => `${permalink}` }],
-    ],
+    markdown: {
+      remarkPlugins: [
+        [
+          'remark-wiki-link',
+          {
+            pageResolver: (name) => [name],
+            hrefTemplate: (permalink) => `${permalink}`,
+          },
+        ],
+      ],
+    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
