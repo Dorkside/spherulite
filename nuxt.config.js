@@ -45,9 +45,6 @@ const getTextChildren = (item) => {
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
-  router: {
-    base: '/',
-  },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -94,7 +91,11 @@ export default {
   ],
 
   // Content module configuration: https://go.nuxtjs.dev/config-content
-  content: {},
+  content: {
+    remarkPlugins: [
+      ['remark-wiki-link', { hrefTemplate: (permalink) => `${permalink}` }],
+    ],
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
